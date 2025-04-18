@@ -1,5 +1,4 @@
 import requests
-from constants import DOCKER_COMPOSE
 
 BASE_URL = "http://127.0.0.1:8000"
 
