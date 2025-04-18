@@ -7,4 +7,4 @@ app.include_router(routes.router)
 
 @app.get("/")
 def root():
-    return {"message": "Welcome to the FastAPI Boilerplate"}
+    return {"message": "Healthy"}

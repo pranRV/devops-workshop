@@ -6,75 +6,16 @@ import plotly.express as px
 import numpy as np
 import random
 import api
+from constants import team_mascots, team_slogans, team_backgrounds,teams,team_qualification_messages
+import asyncio
 
-USE_API = True  # Set to True if using API for data fetching
+# Set to True if using API for data fetching
+USE_API = True  
 
 # Initialize session state for visualization option
 if "viz_option" not in st.session_state:
     st.session_state["viz_option"] = "Points Comparison"
 
-teams = ["RCB", "DC", "GT", "MI", "PBSK", "RR", "CSK", "SRH", "KKR", "LSG"]
-
-
-
-# Team backgrounds, slogans and colors
-team_backgrounds = {
-    "CSK": "linear-gradient(135deg, #FFFF00 0%, #FDB913 100%)",
-    "DC": "linear-gradient(135deg, #4682B4 0%, #00008B 100%)",
-    "GT": "linear-gradient(135deg, #1D2951 0%, #86EFAC 100%)",
-    "MI": "linear-gradient(135deg, #004BA0 0%, #00FFFF 100%)",
-    "PBSK": "linear-gradient(135deg, #D71920 0%, #FDB913 100%)",
-    "RR": "linear-gradient(135deg, #FF1493 0%, #872561 100%)",
-    "RCB": "linear-gradient(135deg, #EC1C24 0%, #000000 100%)",
-    "SRH": "linear-gradient(135deg, #FFA500 0%, #FF4500 100%)",
-    "KKR": "linear-gradient(135deg, #3A225D 0%, #FFD700 100%)",
-    "LSG": "linear-gradient(135deg, #00FFFF 0%, #00008B 100%)"
-}
-
-team_slogans = {
-    "CSK": "Whistle Podu! 🦁",
-    "DC": "Roar Macha! 🐯",
-    "GT": "Aava De! 🦁",
-    "MI": "Duniya Hila Denge! 💙",
-    "PBSK": "Sher Squad! 🦁",
-    "RR": "Halla Bol! 💗",
-    "RCB": "Ee Sala Cup Namde? 😂",
-    "SRH": "Orange Army! 🧡",
-    "KKR": "Korbo Lorbo Jeetbo! 💜",
-    "LSG": "Lucknow Ke Supergiants! 🔵"
-}
-
-team_mascots = {
-    "CSK": "🦁",
-    "DC": "🐯",
-    "GT": "🦁",
-    "MI": "💙",
-    "PBSK": "🦁",
-    "RR": "💗",
-    "RCB": "🤡",
-    "SRH": "🧡",
-    "KKR": "💜",
-    "LSG": "🔵"
-}
-
-# Team-specific messages
-team_qualification_messages = {
-    "RCB": {
-        "high": "IRRESPECTIVE OF PREDICTION, EVEN THIS YEAR NO CUPU ONLY LOLLIPOPU 🤣",
-        "medium": "RCB fans in Ee Sala Cup Namde mode again? Dreams bigger than performance 🤡😂",
-        "low": "Don't worry RCB fans, you're used to this by now 😭"
-    },
-    "default": {
-        "high": "Amazing! Your team is on track to make the playoffs! 🎉",
-        "medium": "Decent chances, but every match counts now! 💪",
-        "low": "It's a tough road ahead, but cricket is unpredictable! 🙏"
-    },
-    "SRH": {
-        "high": "Orange Army rising! SRH looking strong for the playoffs! 🧡🔥",
-        "medium": "Keep supporting the Sunrisers! They're fighting hard! 🧡",
-        "low": "Don't lose hope! SRH can still turn things around! 🧡"
-    }
-}
 
 st.set_page_config(
         page_title="RCBinator",
@@ -82,7 +23,7 @@ st.set_page_config(
     layout="wide",
     )
 
-def main():
+async def main():
     # Apply custom CSS
     apply_custom_css()
     
@@ -184,7 +125,7 @@ def main():
             """)
         
         # Start processing team data
-        process_team_data(selected_tag, simulations, quick_partial_results)
+        await process_team_data(selected_tag, simulations, quick_partial_results)
     
     # Footer
     footer_note = get_footer_note()
@@ -277,7 +218,7 @@ def team_selector():
     return selected_team
 
 
-def process_team_data(selected_tag, simulations, quick_partial_results):
+async def process_team_data(selected_tag, simulations, quick_partial_results):
     """Process team data with progressive loading and visualization"""
     # Status container for live updates
     status_container = st.empty()
@@ -305,7 +246,7 @@ def process_team_data(selected_tag, simulations, quick_partial_results):
     # Calculate top 4 chances (playoff qualification)
     future_top4 = None
     if USE_API:
-        future_top4 = api.get_team_probability(selected_tag, 4, simulations)
+        future_top4 = await api.get_team_probability(selected_tag, 4, simulations)
     else:
         future_top4 = MyTeam(selected_tag, T, matches_done, S, 4, simulations)
     top_4, pred_match_outcomes, pred_points_table = future_top4
@@ -354,7 +295,7 @@ def process_team_data(selected_tag, simulations, quick_partial_results):
     
     future_top2 = None
     if USE_API:
-        future_top2 = api.get_team_probability(selected_tag, 2, simulations)
+        future_top2 = await api.get_team_probability(selected_tag, 2, simulations)
     else:
         future_top2 = MyTeam(selected_tag, T, matches_done, S, 2, simulations)
     top_2, pred_match_outcomes_2, pred_points_table_2 = future_top2
@@ -368,7 +309,7 @@ def process_team_data(selected_tag, simulations, quick_partial_results):
     # Using 75% of top 1 finish to represent championship probability
     future_top1 = None
     if USE_API:
-        future_top1 = api.get_team_probability(selected_tag, 1, simulations)
+        future_top1 = await api.get_team_probability(selected_tag, 1, simulations)
     else:
         future_top1 = MyTeam(selected_tag, T, matches_done, S, 1, simulations)
     top_1, pred_match_outcomes_1, pred_points_table_1 = future_top1
@@ -1165,4 +1106,4 @@ def create_qualification_path(pred_match_outcomes, selected_team):
     
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())

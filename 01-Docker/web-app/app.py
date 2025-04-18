@@ -7,11 +7,9 @@ import numpy as np
 import random
 import api
 
-USE_API = True  # Set to True if using API for data fetching
+import asyncio
 
-# Initialize session state for visualization option
-if "viz_option" not in st.session_state:
-    st.session_state["viz_option"] = "Points Comparison"
+USE_API = False
 
 teams = ["RCB", "DC", "GT", "MI", "PBSK", "RR", "CSK", "SRH", "KKR", "LSG"]
 
@@ -76,13 +74,18 @@ team_qualification_messages = {
     }
 }
 
+# Initialize session state for visualization option
+if "viz_option" not in st.session_state:
+    st.session_state["viz_option"] = "Points Comparison"
+
+
 st.set_page_config(
         page_title="RCBinator",
     page_icon="🏆",
     layout="wide",
     )
 
-def main():
+async def main():
     # Apply custom CSS
     apply_custom_css()
     
@@ -184,7 +187,7 @@ def main():
             """)
         
         # Start processing team data
-        process_team_data(selected_tag, simulations, quick_partial_results)
+        await process_team_data(selected_tag, simulations, quick_partial_results)
     
     # Footer
     footer_note = get_footer_note()
@@ -277,7 +280,7 @@ def team_selector():
     return selected_team
 
 
-def process_team_data(selected_tag, simulations, quick_partial_results):
+async def process_team_data(selected_tag, simulations, quick_partial_results):
     """Process team data with progressive loading and visualization"""
     # Status container for live updates
     status_container = st.empty()
@@ -305,7 +308,7 @@ def process_team_data(selected_tag, simulations, quick_partial_results):
     # Calculate top 4 chances (playoff qualification)
     future_top4 = None
     if USE_API:
-        future_top4 = api.get_team_probability(selected_tag, 4, simulations)
+        future_top4 = await api.get_team_probability(selected_tag, 4, simulations)
     else:
         future_top4 = MyTeam(selected_tag, T, matches_done, S, 4, simulations)
     top_4, pred_match_outcomes, pred_points_table = future_top4
@@ -354,7 +357,7 @@ def process_team_data(selected_tag, simulations, quick_partial_results):
     
     future_top2 = None
     if USE_API:
-        future_top2 = api.get_team_probability(selected_tag, 2, simulations)
+        future_top2 = await api.get_team_probability(selected_tag, 2, simulations)
     else:
         future_top2 = MyTeam(selected_tag, T, matches_done, S, 2, simulations)
     top_2, pred_match_outcomes_2, pred_points_table_2 = future_top2
@@ -368,7 +371,7 @@ def process_team_data(selected_tag, simulations, quick_partial_results):
     # Using 75% of top 1 finish to represent championship probability
     future_top1 = None
     if USE_API:
-        future_top1 = api.get_team_probability(selected_tag, 1, simulations)
+        future_top1 = await api.get_team_probability(selected_tag, 1, simulations)
     else:
         future_top1 = MyTeam(selected_tag, T, matches_done, S, 1, simulations)
     top_1, pred_match_outcomes_1, pred_points_table_1 = future_top1
@@ -1165,4 +1168,4 @@ def create_qualification_path(pred_match_outcomes, selected_team):
     
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
