@@ -24,8 +24,8 @@ GitHub: [github.com/rithinch](https://github.com/rithinch)
 | 10:30 - 11:30   | Docker: Containers for Developers          |
 | 11:30 - 12:15   | Cloud Deployment & Hosting                 |
 | 12:15 - 1:00    | CI/CD with GitHub Actions                  |
-| 1:00 - 2:30     | Lunch 🍽️                                   |
-| 2:30 - 3:30     | Distributed Systems & Scaling Challenges   |
+| 1:00 - 2:00     | Lunch 🍽️                                   |
+| 2:00 - 3:30     | Distributed Systems & Scaling Challenges   |
 | 3:30 - 3:40     | Break                                      |
 | 3:40 - 4:40     | Infrastructure as Code with .NET Aspire                    |
 | 4:40 - 4:50     | Break                                      |
