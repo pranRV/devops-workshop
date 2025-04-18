@@ -22,12 +22,14 @@ GitHub: [github.com/rithinch](https://github.com/rithinch)
 | 9:30 - 10:00    | Pre-requisites & Dev Environment Setup     |
 | 10:00 - 10:30   | Introduction to DevOps                     |
 | 10:30 - 11:30   | Docker: Containers for Developers          |
-| 11:30 - 12:30   | Cloud Deployment & Hosting                 |
-| 12:30 - 1:30    | Lunch 🍽️                                   |
-| 1:30 - 3:00     | Distributed Systems & Scaling Challenges   |
-| 3:00 - 4:00     | Infrastructure as Code                     |
-| 4:00 - 4:45     | CI/CD with GitHub Actions                  |
-| 4:45 - 5:30     | Observability & Monitoring Fundamentals    |
+| 11:30 - 12:15   | Cloud Deployment & Hosting                 |
+| 12:15 - 1:00    | CI/CD with GitHub Actions                  |
+| 1:00 - 2:30     | Lunch 🍽️                                   |
+| 2:30 - 3:30     | Distributed Systems & Scaling Challenges   |
+| 3:30 - 3:40     | Break                                      |
+| 3:40 - 4:40     | Infrastructure as Code with .NET Aspire                    |
+| 4:40 - 4:50     | Break                                      |
+| 4:50 - 5:30     | Observability & Monitoring Fundamentals    |
 | 5:30 - 6:00     | Real-world Q&A, Wrap-up                    |
 
 ---
@@ -110,7 +112,46 @@ graph LR
 
 ---
 
-## 🧠 Session: Distributed Systems & Scaling Challenges (1:30 - 3:00)
+## 🚀 Session: CI/CD with GitHub Actions (12:40 - 1:30)
+
+**Concepts:**
+- Automated testing & deployment.
+- Reduces manual errors.
+- Faster feature shipping.
+
+**GitHub Actions Example:**
+```yaml
+name: Deploy App
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Build Docker Image
+      run: docker build -t my-app .
+
+    - name: Push to Registry
+      run: docker push myregistry.azurecr.io/my-app:latest
+```
+
+**Exercise:**
+- Create a GitHub Action to build and push your container image to Azure Container Registry.
+
+**Learning Resource:**
+- [GitHub Actions Documentation](https://docs.github.com/en/actions)
+- [Deploy to Azure with GitHub Actions](https://learn.microsoft.com/en-us/azure/developer/github/github-actions-overview)
+
+---
+
+## 🤔 Session: Distributed Systems & Scaling Challenges (2:30 - 3:30)
 
 **Why Break Down Systems?**
 - Independent scaling.
@@ -154,7 +195,7 @@ sequenceDiagram
 
 ---
 
-## 🔧 Session: Infrastructure as Code (3:00 - 4:00)
+## 🔧 Session: Infrastructure as Code (3:40 - 4:40)
 
 **Concepts:**
 - Declarative templates for cloud infra.
@@ -193,46 +234,7 @@ resource "azurerm_container_group" "app" {
 
 ---
 
-## 🚀 Session: CI/CD with GitHub Actions (4:00 - 4:45)
-
-**Concepts:**
-- Automated testing & deployment.
-- Reduces manual errors.
-- Faster feature shipping.
-
-**GitHub Actions Example:**
-```yaml
-name: Deploy App
-
-on:
-  push:
-    branches: [ main ]
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
-
-    - name: Build Docker Image
-      run: docker build -t my-app .
-
-    - name: Push to Registry
-      run: docker push myregistry.azurecr.io/my-app:latest
-```
-
-**Exercise:**
-- Create a GitHub Action to build and push your container image to Azure Container Registry.
-
-**Learning Resource:**
-- [GitHub Actions Documentation](https://docs.github.com/en/actions)
-- [Deploy to Azure with GitHub Actions](https://learn.microsoft.com/en-us/azure/developer/github/github-actions-overview)
-
----
-
-## 🤔 Session: Observability & Monitoring Fundamentals (4:45 - 5:30)
+## 🚀 Session: Observability & Monitoring Fundamentals (4:50 - 5:30)
 
 **3 Pillars:**
 - Logs: Text-based records.
