@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  fastapi:
+    build: ./fastapi-app
+    container_name: fastapi-app
+    ports:
+      - "8000:8000"
+    networks:
+      - app-network
+
+  streamlit:
+    build: ./web-app
+    container_name: streamlit-app
+    ports:
+      - "8501:8501"
+    depends_on:
+      - fastapi
+    networks:
+      - app-network
+
+networks:
+  app-network:
