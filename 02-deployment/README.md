@@ -77,6 +77,14 @@ az acr login --name <your-registry-name>
 
 ### 11. Build the Docker Image
 
+- Navigate to your project directory where the Dockerfile is located
+
+```bash
+cd 01-docker/web-app
+```
+
+- Build the Docker image using the following command:
+
 ```bash
 docker build -t <your-registry-name>.azurecr.io/<your-images/image-name>:<tag> . --platform linux/amd64
 ```
