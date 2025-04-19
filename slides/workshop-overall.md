@@ -38,6 +38,8 @@ azd login
 azd whoami
 ```
 
+---
+
 # DevOps Workshop 2025 🚀
 **From Code to Cloud**   
 
