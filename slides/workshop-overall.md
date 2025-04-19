@@ -5,6 +5,39 @@ paginate: true
 size: 16:9
 ---
 
+# DevOps Workshop 2025 - Pre-requiresites 🧑‍💻
+**From Code to Cloud**   
+
+1.⁠ ⁠*Code Editor*: Preferably [Visual Studio Code](https://code.visualstudio.com/).
+2.⁠ ⁠*.NET 9.0*: [Download .NET 9.0](https://dotnet.microsoft.com/en-us/download).
+3.⁠ ⁠*.NET Aspire SDK*: Ensure it matches the project's requirements.
+4.⁠ ⁠*Docker Desktop*: [Download Docker Desktop](https://www.docker.com/get-started/).
+5.⁠ ⁠*Dapr CLI*: Version 1.13.0 or higher. [Install Dapr CLI](https://docs.dapr.io/getting-started/install-dapr-cli/).
+6.⁠ ⁠*Azure Developer CLI*: latest [Download](https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/install-azd?tabs=winget-windows%2Cbrew-mac%2Cscript-linux&pivots=os-mac)
+7.⁠ ⁠*Azure CLI*: latest [Download](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
+8.⁠ ⁠*Azure Functions Core Tools*: latest [Download](https://learn.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=macos%2Cisolated-process%2Cnode-v4%2Cpython-v2%2Chttp-trigger%2Ccontainer-apps&pivots=programming-language-javascript#install-the-azure-functions-core-tools)
+
+
+---
+
+
+# DevOps Workshop 2025 - Verify Setup 🧑‍💻
+**From Code to Cloud**   
+
+⁠```bash
+dotnet --version
+dapr --version
+docker --version
+azd version
+az --version
+func --version
+```
+
+```bash
+azd login
+azd whoami
+```
+
 # DevOps Workshop 2025 🚀
 **From Code to Cloud**   
 
